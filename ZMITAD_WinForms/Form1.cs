@@ -25,17 +25,22 @@ namespace ZMITAD_WinForms
         private int popMin = -1;
         public void add(status s)
         {
+            // czy wywolano z innego watku niz gui?
             if (InvokeRequired)
-            {
+            {// jesli tak
 
+                // to z pomoca invoke wywolaj jeszcze raz ta metode 
+                // na watku gui
+                //
+          // jest to potrzebne, poniewaz gui mozna edytowac tylko z watku gui
                 Invoke(new MethodInvoker(delegate
                 {
                     add(s);
                 }));
-
+                // i wyjdz, bo w watku innym niz gui sie wiecej nie zrobi
                 return;
             }
-
+            // to sie juz wykona w watku gui
             textBox1.Text += "Tresc statusu " + s.text + Environment.NewLine;
 
 
