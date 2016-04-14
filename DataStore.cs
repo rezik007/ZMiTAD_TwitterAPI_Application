@@ -65,14 +65,14 @@ namespace TwitterStreamClient
             {
                 double minelo = (double) (teraz - start);
                 minelo *= 0.001;
-                Console.WriteLine("Minelo " + minelo + " sekund od pierwszego statusu, jest " + ( historia.Count + 1) + " statusow");
                 double ileStatusow = historia.Count + 1;
                 double ileNaSekunde = ileStatusow / minelo;
                 double mineloMinut = minelo / 60.0;
                 double ileNaMinute = ileStatusow / mineloMinut;
+                double sredniaDlugoscWpisu = (double)sumaDlugosciZnakow / ((double)historia.Count + 1);
+                Console.WriteLine("Minelo " + minelo + " sekund od pierwszego statusu, jest " + (historia.Count + 1) + " statusow");
                 Console.WriteLine(" " + ileNaSekunde + " statusow na sekunde");
                 Console.WriteLine(" " + ileNaMinute + " statusow na minute");
-                double sredniaDlugoscWpisu = (double)sumaDlugosciZnakow / ((double)historia.Count + 1);
                 Console.WriteLine("Srednia dlugosc wpisu " + sredniaDlugoscWpisu + " znakow" + "\n\r");
             }
             historia.Add(zp);

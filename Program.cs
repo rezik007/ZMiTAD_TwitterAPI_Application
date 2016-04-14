@@ -43,10 +43,6 @@ namespace TwitterStreamClient
             Logger logger = new Logger();
             string arg1 = "";
 
-
-            //Application.EnableVisualStyles();
-       //     Application.Run(new TestForm()); // or whatever
-  
             try
             {
                 if (args.Length > 0)
