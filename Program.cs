@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 #region License
 /*
  Copyright (c) 2010 Whitley Media
@@ -35,12 +36,17 @@ namespace TwitterStreamClient
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             TwitterStream stream = new TwitterStream();
             Logger logger = new Logger();
             string arg1 = "";
 
+
+            //Application.EnableVisualStyles();
+       //     Application.Run(new TestForm()); // or whatever
+  
             try
             {
                 if (args.Length > 0)
