@@ -109,7 +109,7 @@ namespace TwitterStreamClient
                             }
                                     
                             //Success
-                            wati = 250;
+                            wait = 250;
 
                             //Write Status
                         //    Console.Write(jsonText);
