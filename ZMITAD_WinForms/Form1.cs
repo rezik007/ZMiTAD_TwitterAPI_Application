@@ -45,6 +45,7 @@ namespace ZMITAD_WinForms
             int imin = (int)minuta;
             if(popMin == -1)
             {
+                //test
                 popMin = imin;
                 ilosc++;
             }
