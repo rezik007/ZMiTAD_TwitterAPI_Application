@@ -32,6 +32,7 @@ namespace TwitterStreamClient
             Console.WriteLine("TXT: " + status.text);
             Console.WriteLine("USER: " + status.user.name);
             Console.WriteLine("SRC: " + status.source);
+            //geolokalizacja jeszcze nie dziala
             if (status.geo == null)
             {
                 Console.WriteLine("GEO: NULL");
@@ -64,7 +65,7 @@ namespace TwitterStreamClient
             {
                 double minelo = (double) (teraz - start);
                 minelo *= 0.001;
-                Console.WriteLine("Minelo " + minelo + " sekund od pierwsezgo statusu, jest " + ( historia.Count + 1) + " statusow");
+                Console.WriteLine("Minelo " + minelo + " sekund od pierwszego statusu, jest " + ( historia.Count + 1) + " statusow");
                 double ileStatusow = historia.Count + 1;
                 double ileNaSekunde = ileStatusow / minelo;
                 double mineloMinut = minelo / 60.0;
@@ -72,7 +73,7 @@ namespace TwitterStreamClient
                 Console.WriteLine(" " + ileNaSekunde + " statusow na sekunde");
                 Console.WriteLine(" " + ileNaMinute + " statusow na minute");
                 double sredniaDlugoscWpisu = (double)sumaDlugosciZnakow / ((double)historia.Count + 1);
-                Console.WriteLine("Srednia dlugosc wpisu " + sredniaDlugoscWpisu + " znakow");
+                Console.WriteLine("Srednia dlugosc wpisu " + sredniaDlugoscWpisu + " znakow" + "\n\r");
             }
             historia.Add(zp);
             return true;
