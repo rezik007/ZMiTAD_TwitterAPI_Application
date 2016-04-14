@@ -42,6 +42,8 @@ namespace ZMITAD_WinForms
             }
             // to sie juz wykona w watku gui
             textBox1.Text += "Tresc statusu " + s.text + Environment.NewLine;
+            textBox1.AppendText(s.text);
+            
 
 
             decimal teraz = DateTime.Now.Ticks / (decimal)TimeSpan.TicksPerMillisecond; ;
