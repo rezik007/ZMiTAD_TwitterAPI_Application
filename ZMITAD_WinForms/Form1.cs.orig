@@ -174,7 +174,22 @@ namespace ZMITAD_WinForms
                 return;
             }
             // to sie juz wykona w watku gui
+<<<<<<< HEAD
             if(ilosciSlow.Count == 0)
+=======
+            textBox1.Text += "Tresc statusu " + s.text + Environment.NewLine;
+            textBox1.AppendText(s.text);
+
+
+            
+
+
+            decimal teraz = DateTime.Now.Ticks / (decimal)TimeSpan.TicksPerMillisecond; ;
+            teraz = teraz - start;
+            double minuta = ((double)teraz / 1000.0) / 10.0;
+            int imin = (int)minuta;
+            if(popMin == -1)
+>>>>>>> origin/master
             {
                 ileZnakowMin = ileZnakowMax = s.text.Length;
             }
@@ -238,22 +253,6 @@ namespace ZMITAD_WinForms
             // mozna by ulepszyc
             return text.Split(' ').Length;
         }
-        public decimal getCzasStatusu(int i)
-        {
-            return czasyNadejscia[i];
-        }
-        public int getIloscZnakow(int i)
-        {
-            return ilosciZnakow[i];
-        }
-        public int getIloscSlow(int i)
-        {
-            return ilosciSlow[i];
-        }
-        public int getIleStatusow()
-        {
-            return ilosciSlow.Count;
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             ThreadStart childref = new ThreadStart(CallToChildThread);
@@ -272,17 +271,6 @@ namespace ZMITAD_WinForms
             odswiezWykres();
         }
 
-        Historia h;
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (h == null)
-                h = new Historia(this);
-            h.Show();
-        }
-        public void zamknietoHistorie()
-        {
-            h = null;
-        }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             odswiezWykres();
