@@ -31,6 +31,7 @@ namespace ZMITAD_WinForms
                 it.SubItems.Add(czasSekund.ToString());
                 it.SubItems.Add(f.getIloscZnakow(i).ToString());
                 it.SubItems.Add(f.getIloscSlow(i).ToString());
+                it.SubItems.Add(f.getTresc(i));
                 listView1.Items.Add(it);
             }
         }

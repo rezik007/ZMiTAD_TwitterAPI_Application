@@ -33,6 +33,7 @@ namespace ZMITAD_WinForms
         private List<decimal> czasyNadejscia = new List<decimal>();
         private List<int> ilosciSlow = new List<int>();
         private List<int> ilosciZnakow = new List<int>();
+        private List<string> tresciStatusow = new List<string>();
         private int sumaDlugosciStatusow;
         private int sumaIlosciSlow;
         // dlugosc najkrotszego i nalduzszego statussu
@@ -195,6 +196,7 @@ namespace ZMITAD_WinForms
             czasyNadejscia.Add(teraz);
             odswiezWykres();
             int sekunda = (int)((double)teraz / 1000.0);
+            tresciStatusow.Add(s.text);
             textBox1.Text += "[sekunda "+sekunda+"]: "+ "Tresc statusu " + s.text + Environment.NewLine;
             //double minuta = ((double)teraz / getCzasPrzedzialu());
             //int imin = (int)minuta;
@@ -245,6 +247,10 @@ namespace ZMITAD_WinForms
         public int getIloscZnakow(int i)
         {
             return ilosciZnakow[i];
+        }
+        public string getTresc(int i)
+        {
+            return tresciStatusow[i];
         }
         public int getIloscSlow(int i)
         {
