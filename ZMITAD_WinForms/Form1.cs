@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MathNet.Numerics;
+using MathNet.Numerics.Distributions;
 
 namespace ZMITAD_WinForms
 {
@@ -259,6 +261,29 @@ namespace ZMITAD_WinForms
         public int getIleStatusow()
         {
             return ilosciSlow.Count;
+        }
+        private void testNormalnosci(List<float> Dane)
+        {
+            // http://stats.stackexchange.com/questions/97796/appropriate-test-for-detecting-a-signal-in-normally-distributed-noise
+   
+            float[] sortedYs;
+            sortedYs = Dane.OrderBy(a => a).ToArray<float>();
+            float[] cdf = new float[sortedYs.Length];
+
+            MathNet.Numerics.Distributions.Laplace ld = new MathNet.Numerics.Distributions.Laplace();
+            for (int i = 0; i < sortedYs.Length; i++)
+            {
+                cdf[i] = (float)ld.CumulativeDistribution(sortedYs[i]);
+            }
+
+            float AD = 0;
+            for (int i = 0; i < cdf.Length; i++)
+            {
+                AD -= (float)((2 * (i + 1) - 1) * (Math.Log(cdf[i]) + Math.Log(1 - cdf[cdf.Length - 1 - i])));
+            }
+            AD /= cdf.Length;
+            AD -= cdf.Length;
+            AD *= (float)(1 + (0.75 + 2.25 / cdf.Length) / cdf.Length);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
