@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MathNet.Numerics;
 using MathNet.Numerics.Distributions;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ZMITAD_WinForms
 {
@@ -284,6 +285,10 @@ namespace ZMITAD_WinForms
             AD /= cdf.Length;
             AD -= cdf.Length;
             AD *= (float)(1 + (0.75 + 2.25 / cdf.Length) / cdf.Length);
+        }
+        private void test2()
+        {
+            TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
         }
         private void Form1_Load(object sender, EventArgs e)
         {
