@@ -8,9 +8,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MathNet.Numerics;
-using MathNet.Numerics.Distributions;
 using System.Windows.Forms.DataVisualization.Charting;
+using FinMath.Statistics.HypothesisTesting;
+using FinMath.LinearAlgebra;
+using FinMath.Statistics.Distributions;
+using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace ZMITAD_WinForms
 {
@@ -41,6 +44,34 @@ namespace ZMITAD_WinForms
         private int sumaIlosciSlow;
         // dlugosc najkrotszego i nalduzszego statussu
         private int ileZnakowMin, ileZnakowMax;
+        // tablica hashujaca slowa
+        private Hashtable slowa = new Hashtable();
+        // forma do slow
+        private Slowa s;
+
+        public Hashtable getHashTableSlowa()
+        {
+            return slowa;
+        }
+        public void zamknietoSlowa()
+        {
+            s = null;
+        }
+        // tablica hashujaca dla kazdego slowa zawiera jego ilosc powtorzen
+        private void dodajSlowo(string slowo)
+        {
+            if (slowo.Length == 0)
+                return;
+            if (slowa.Contains(slowo))
+            {
+                int old = (int)slowa[slowo];
+                slowa[slowo] = old + 1;
+            }
+            else
+            {
+                slowa.Add(slowo,1);
+            }
+        }
 
         private double getCzasPrzedzialu()
         {
@@ -240,8 +271,16 @@ namespace ZMITAD_WinForms
         }
         private int policzSlowa(String text)
         {
+            // Usuwam wszystkie znaki niealfanumeryczne
+            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+            String t2 = rgx.Replace(text, "");
             // mozna by ulepszyc
-            return text.Split(' ').Length;
+            string [] slowa = t2.Split(' ');
+            foreach(string s in slowa)
+            {
+                dodajSlowo(s);
+            }
+            return slowa.Length;
         }
         public decimal getCzasStatusu(int i)
         {
@@ -288,14 +327,39 @@ namespace ZMITAD_WinForms
         }
         private void test2()
         {
-            TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
-            chart1.DataManipulator.Statistics.NormalDistribution
+         //   TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
+       //     chart1.DataManipulator.Statistics.NormalDistribution
         }
         private void test3()
         {
-            Accord.Statistics.Testing.ShapiroWilkTest t;
+     //       Accord.Statistics.Testing.ShapiroWilkTest t;
         }
-        private void Form1_Load(object sender, EventArgs e)
+        static void ttest2()
+        {
+            // Create an instance of normal distribution.
+            Normal distr = new Normal(3, 1);
+
+            // Generate random sample from normal distribution.
+            Vector series = distr.Sample(100);
+
+            // Create an instance of TTest.
+            TTest test = new TTest(0.05, Tail.Both);
+            test.Update(series, 0);
+
+            string s = ("Test Result:");
+            s += Environment.NewLine;
+            // Test decision
+            s += ("  The null hypothesis failed to be rejected:" + test.Decision);
+            s += Environment.NewLine;
+            // The statistic of TTest test.
+            s += ("  Statistics = {0:0.000}" + test.Statistics);
+            s += Environment.NewLine;
+            // The p-value of the test statistic.
+            s += ("  P-Value = {0:0.000}" + test.PValue);
+
+            MessageBox.Show(s);
+        }
+    private void Form1_Load(object sender, EventArgs e)
         {
             ThreadStart childref = new ThreadStart(CallToChildThread);
             Thread childThread = new Thread(childref);
@@ -324,6 +388,14 @@ namespace ZMITAD_WinForms
         {
             h = null;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (s == null)
+                s = new Slowa(this);
+            s.Show();
+        }
+
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             odswiezWykres();
