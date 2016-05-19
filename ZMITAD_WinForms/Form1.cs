@@ -62,6 +62,8 @@ namespace ZMITAD_WinForms
         {
             if (slowo.Length == 0)
                 return;
+            if (slowo[0] == '-')
+                return;
             if (slowa.Contains(slowo))
             {
                 int old = (int)slowa[slowo];
@@ -334,13 +336,13 @@ namespace ZMITAD_WinForms
         {
      //       Accord.Statistics.Testing.ShapiroWilkTest t;
         }
-        static void ttest2()
+        static public void ttest(Vector series)
         {
             // Create an instance of normal distribution.
-            Normal distr = new Normal(3, 1);
+          ///  Normal distr = new Normal(3, 1);
 
             // Generate random sample from normal distribution.
-            Vector series = distr.Sample(100);
+          //  Vector series = distr.Sample(100);
 
             // Create an instance of TTest.
             TTest test = new TTest(0.05, Tail.Both);

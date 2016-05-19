@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinMath.LinearAlgebra;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,6 +50,18 @@ namespace ZMITAD_WinForms
         private void button1_Click(object sender, EventArgs e)
         {
             odswiezListe();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<double> tab = new List<double>();
+            for (int i = 0; i < f.getIleStatusow(); i++)
+            {
+                tab.Add(f.getTresc(i).Length);
+            }
+            double[] ar = tab.ToArray();
+            Vector dane = new Vector(ar);
+            Form1.ttest(dane);
         }
     }
 }
