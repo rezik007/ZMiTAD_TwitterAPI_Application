@@ -10,5 +10,6 @@ namespace ZMITAD_WinForms
     {
       void add(status s);
 
+        string getTrackKeywords();
     }
 }

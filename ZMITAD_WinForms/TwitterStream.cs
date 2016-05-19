@@ -29,7 +29,7 @@ namespace ZMITAD_WinForms
             StreamReader responseStream = null;
             MessageQueue q = null;
             string useQueue = ConfigurationManager.AppSettings["use_queue"];
-            string postparameters = (ConfigurationManager.AppSettings["track_keywords"].Length == 0 ? string.Empty : "&track=" + ConfigurationManager.AppSettings["track_keywords"]) +
+            string postparameters = (ds.getTrackKeywords().Length == 0 ? string.Empty : "&track=" + ds.getTrackKeywords()) +
                                     (ConfigurationManager.AppSettings["follow_userid"].Length == 0 ? string.Empty : "&follow=" + ConfigurationManager.AppSettings["follow_userid"]) +
                                     (ConfigurationManager.AppSettings["location_coord"].Length == 0 ? string.Empty : "&locations=" + ConfigurationManager.AppSettings["location_coord"]);
 

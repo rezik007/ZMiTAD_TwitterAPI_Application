@@ -193,6 +193,11 @@ namespace ZMITAD_WinForms
             }
             return sek.ToString() + " sekund";
         }
+
+        public string getTrackKeywords()
+        {
+            return textBox2.Text;
+        }
         public void add(status s)
         {
             // czy wywolano z innego watku niz gui?
@@ -361,17 +366,25 @@ namespace ZMITAD_WinForms
 
             MessageBox.Show(s);
         }
-    private void Form1_Load(object sender, EventArgs e)
+        private void start_thread()
         {
+            textBox2.Enabled = false;
+            button3.Enabled = false;
             ThreadStart childref = new ThreadStart(CallToChildThread);
             Thread childThread = new Thread(childref);
             childThread.Start();
+        }
+    private void Form1_Load(object sender, EventArgs e)
+        {
 
             comboBox1.Items.Add("Co 1 sekunda");
             comboBox1.Items.Add("Co 30 sekund");
             comboBox1.Items.Add("Co minuta");
             comboBox1.Items.Add("Co 5 minut");
             comboBox1.SelectedIndex = 0;
+
+            /// odkomentowac by samo zaczelo od razu szukac
+        //    start_thread();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -396,6 +409,11 @@ namespace ZMITAD_WinForms
             if (s == null)
                 s = new Slowa(this);
             s.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            start_thread();
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
