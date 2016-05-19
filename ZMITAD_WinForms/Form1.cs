@@ -289,6 +289,11 @@ namespace ZMITAD_WinForms
         private void test2()
         {
             TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
+            chart1.DataManipulator.Statistics.NormalDistribution
+        }
+        private void test3()
+        {
+            Accord.Statistics.Testing.ShapiroWilkTest t;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
