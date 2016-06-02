@@ -98,10 +98,13 @@ namespace ZMITAD_WinForms
         private void odswiezWykres()
         {
             chart1.Series[0].Points.Clear();
+            chart1.Series[0].IsVisibleInLegend = false;
             if (comboBox2.SelectedIndex == 3)
             {
                 comboBox1.Enabled = false;
                 chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+                chart1.ChartAreas[0].AxisY.Title = "Ilość statusów";
+                chart1.ChartAreas[0].AxisX.Title = "Przedziały długości znaków w pojedynczym statusie";
 
                 // histogram
                 double przedzial = ileZnakowMax - ileZnakowMin;
@@ -152,16 +155,22 @@ namespace ZMITAD_WinForms
                     // dodaj do ile, to co zliczamy
                     if (comboBox2.SelectedIndex == 0)
                     {
+                        chart1.ChartAreas[0].AxisY.Title = "Ilość statusów";
+                        chart1.ChartAreas[0].AxisX.Title = "Przedział czasu";
                         // zliczamy statusy - dodaj 1
                         ile++;
                     }
                     else if (comboBox2.SelectedIndex == 1)
                     {
+                        chart1.ChartAreas[0].AxisY.Title = "Ilość znaków";
+                        chart1.ChartAreas[0].AxisX.Title = "Przedział czasu";
                         // zliczamy znaki - dodaj ilosc znakow i-tego statusu
                         ile += ilosciZnakow[i];
                     }
                     else if (comboBox2.SelectedIndex == 2)
                     {
+                        chart1.ChartAreas[0].AxisY.Title = "Ilość słów";
+                        chart1.ChartAreas[0].AxisX.Title = "Przedział czasu";
                         // zliczamy slowa - dodaj ilosc slow i-tego statusu
                         ile += ilosciSlow[i];
                     }

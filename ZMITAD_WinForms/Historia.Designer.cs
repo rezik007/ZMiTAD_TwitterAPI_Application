@@ -40,6 +40,7 @@
             // 
             // listView1
             // 
+            this.listView1.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -72,7 +73,7 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "Tresc";
-            this.columnHeader5.Width = 260;
+            this.columnHeader5.Width = 500;
             // 
             // button1
             // 
