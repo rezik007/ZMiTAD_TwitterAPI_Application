@@ -61,7 +61,7 @@ namespace ZMITAD_WinForms
             }
             double[] ar = tab.ToArray();
             Vector dane = new Vector(ar);
-            Form1.ttest(dane);
+            Form1.swtest(ar);
         }
     }
 }

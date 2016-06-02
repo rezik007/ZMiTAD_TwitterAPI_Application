@@ -337,9 +337,10 @@ namespace ZMITAD_WinForms
          //   TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
        //     chart1.DataManipulator.Statistics.NormalDistribution
         }
-        private void test3()
+        public static void swtest(double [] w)
         {
-     //       Accord.Statistics.Testing.ShapiroWilkTest t;
+            Accord.Statistics.Testing.ShapiroWilkTest t = new Accord.Statistics.Testing.ShapiroWilkTest(w);
+            MessageBox.Show("Shapiro Wilk, wynik " + t.Significant + " p value " + t.PValue);
         }
         static public void ttest(Vector series)
         {

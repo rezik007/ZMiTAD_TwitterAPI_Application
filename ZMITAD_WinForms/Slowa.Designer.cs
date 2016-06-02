@@ -90,9 +90,9 @@
             // 
             this.button2.Location = new System.Drawing.Point(207, 12);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(182, 23);
+            this.button2.Size = new System.Drawing.Size(259, 23);
             this.button2.TabIndex = 3;
-            this.button2.Text = "Wykonaj TTest (test normalnosci)";
+            this.button2.Text = "Wykonaj shapiro wilk (test normalnosci)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
