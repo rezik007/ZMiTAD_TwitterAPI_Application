@@ -348,6 +348,11 @@ namespace ZMITAD_WinForms
         }
         public static void swtest(double [] w)
         {
+            if(w.Length < 4)
+            {
+                MessageBox.Show("SWTest wymaga przynajmniej 4 probek");
+                return;
+            }
             Accord.Statistics.Testing.ShapiroWilkTest t = new Accord.Statistics.Testing.ShapiroWilkTest(w);
             MessageBox.Show("Shapiro Wilk, wynik " + t.Significant + " p value " + t.PValue);
         }
