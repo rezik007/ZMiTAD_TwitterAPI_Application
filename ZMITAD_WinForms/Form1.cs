@@ -416,11 +416,6 @@ namespace ZMITAD_WinForms
             start_thread();
         }
 
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             odswiezWykres();
