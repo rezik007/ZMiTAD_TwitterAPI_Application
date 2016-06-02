@@ -104,7 +104,7 @@ namespace ZMITAD_WinForms
                 comboBox1.Enabled = false;
                 chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
                 chart1.ChartAreas[0].AxisY.Title = "Ilość statusów";
-                chart1.ChartAreas[0].AxisX.Title = "Przedziały długości znaków we wpisie";
+                chart1.ChartAreas[0].AxisX.Title = "Przedziały długości znaków w pojedynczym statusie";
 
                 // histogram
                 double przedzial = ileZnakowMax - ileZnakowMin;
@@ -169,6 +169,8 @@ namespace ZMITAD_WinForms
                     }
                     else if (comboBox2.SelectedIndex == 2)
                     {
+                        chart1.ChartAreas[0].AxisY.Title = "Ilość słów";
+                        chart1.ChartAreas[0].AxisX.Title = "Przedział czasu";
                         // zliczamy slowa - dodaj ilosc slow i-tego statusu
                         ile += ilosciSlow[i];
                     }
