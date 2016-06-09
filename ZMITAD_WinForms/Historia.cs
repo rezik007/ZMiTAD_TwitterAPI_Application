@@ -44,7 +44,6 @@ namespace ZMITAD_WinForms
         private void Historia_FormClosed(object sender, FormClosedEventArgs e)
         {
             f.zamknietoHistorie();
-
         }
 
         private void button1_Click(object sender, EventArgs e)

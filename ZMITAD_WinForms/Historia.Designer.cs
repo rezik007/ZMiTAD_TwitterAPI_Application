@@ -73,7 +73,7 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "Tresc";
-            this.columnHeader5.Width = 500;
+            this.columnHeader5.Width = 1000;
             // 
             // button1
             // 
@@ -81,7 +81,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(129, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Odswiez";
+            this.button1.Text = "Odśwież";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -89,9 +89,9 @@
             // 
             this.button2.Location = new System.Drawing.Point(180, 14);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(154, 23);
+            this.button2.Size = new System.Drawing.Size(331, 23);
             this.button2.TabIndex = 2;
-            this.button2.Text = "ShapiroWilk na dlugosci statusow w znakach";
+            this.button2.Text = "Test ShapiroWilk (normalności) na długości statusów w znakach";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
 using System.IO;
 using System.Net.Mail;
 using System.Configuration;
-using System.Resources;
 using System.Reflection;
 using System.Diagnostics;
 
@@ -15,7 +9,7 @@ using System.Diagnostics;
 namespace ZMITAD_WinForms
 { 
     public class logger
-{
+    {
     private static string _baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
     private string _subDirectory = null;
     private string _logDirectory = null;

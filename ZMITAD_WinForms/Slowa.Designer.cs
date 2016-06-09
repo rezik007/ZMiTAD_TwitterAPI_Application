@@ -66,7 +66,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Odswiez";
+            this.button1.Text = "Odśwież";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -77,7 +77,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(106, 17);
             this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Autoodswiezanie";
+            this.checkBox1.Text = "Autoodświeżanie";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // timer1
@@ -92,7 +92,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(259, 23);
             this.button2.TabIndex = 3;
-            this.button2.Text = "Wykonaj shapiro wilk (test normalnosci)";
+            this.button2.Text = "Wykonaj test ShapiroWilk (test normalności)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

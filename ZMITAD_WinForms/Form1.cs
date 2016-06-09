@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using FinMath.Statistics.HypothesisTesting;
-using FinMath.LinearAlgebra;
-using FinMath.Statistics.Distributions;
 using System.Collections;
 using System.Text.RegularExpressions;
 
@@ -26,15 +16,13 @@ namespace ZMITAD_WinForms
 
             start = DateTime.Now.Ticks / (decimal)TimeSpan.TicksPerMillisecond; ;
 
-            comboBox2.Items.Add("Ilosc statusow na przedzial czasu");
-            comboBox2.Items.Add("Ilosc znakow na przedzial czasu");
-            comboBox2.Items.Add("Ilosc slow na przedzial czasu");
-            comboBox2.Items.Add("Histogram (dlugosc statusu w znakach)");
+            comboBox2.Items.Add("Ilość statusów na przedział czasu");
+            comboBox2.Items.Add("Ilość znaków na przedział czasu");
+            comboBox2.Items.Add("Ilość słów na przedział czasu");
+            comboBox2.Items.Add("Histogram (długość statusu w znakach)");
             comboBox2.SelectedIndex = 0;
         }
 
-        private int ilosc = 0;
-        private int popMin = -1;
         private decimal teraz;
         private List<decimal> czasyNadejscia = new List<decimal>();
         private List<int> ilosciSlow = new List<int>();
@@ -42,7 +30,7 @@ namespace ZMITAD_WinForms
         private List<string> tresciStatusow = new List<string>();
         private int sumaDlugosciStatusow;
         private int sumaIlosciSlow;
-        // dlugosc najkrotszego i nalduzszego statussu
+        // dlugosc najkrotszego i najdluzszego statusu
         private int ileZnakowMin, ileZnakowMax;
         // tablica hashujaca slowa
         private Hashtable slowa = new Hashtable();
@@ -64,6 +52,10 @@ namespace ZMITAD_WinForms
                 return;
             if (slowo[0] == '-')
                 return;
+            if (slowo[0] == '?')
+                return;
+            if (slowo[0] == '!')
+                return;
             if (slowa.Contains(slowo))
             {
                 int old = (int)slowa[slowo];
@@ -77,12 +69,6 @@ namespace ZMITAD_WinForms
 
         private double getCzasPrzedzialu()
         {
-            /*
-                     comboBox1.Items.Add("Co 1 sekunda");
-            comboBox1.Items.Add("Co 30 sekund");
-            comboBox1.Items.Add("Co minuta");
-            comboBox1.Items.Add("Co 5 minut");
-            */
 
             int ileSekund = 1;
             if (comboBox1.SelectedIndex == 0)
@@ -104,7 +90,7 @@ namespace ZMITAD_WinForms
                 comboBox1.Enabled = false;
                 chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
                 chart1.ChartAreas[0].AxisY.Title = "Ilość statusów";
-                chart1.ChartAreas[0].AxisX.Title = "Przedziały długości znaków w pojedynczym statusie";
+                chart1.ChartAreas[0].AxisX.Title = "Przedziały ilości znaków w poj. statusie";
 
                 // histogram
                 double przedzial = ileZnakowMax - ileZnakowMin;
@@ -177,7 +163,7 @@ namespace ZMITAD_WinForms
                 }
                 if (ile != 0 && px != -1)
                 {
-                    chart1.Series[0].Points.AddXY(px, ile);
+                    chart1.Series[0].Points.AddXY(px, ile); //
                 }
             }
         }
@@ -209,6 +195,9 @@ namespace ZMITAD_WinForms
         }
         public void add(status s)
         {
+            int ileSlow = policzSlowa(s.text);
+            int sekunda = (int)((double)teraz / 1000.0);
+
             // czy wywolano z innego watku niz gui?
             if (InvokeRequired)
             {// jesli tak
@@ -216,7 +205,7 @@ namespace ZMITAD_WinForms
                 // to z pomoca invoke wywolaj jeszcze raz ta metode 
                 // na watku gui
                 //
-          // jest to potrzebne, poniewaz gui mozna edytowac tylko z watku gui
+                // jest to potrzebne, poniewaz gui mozna edytowac tylko z watku gui
                 Invoke(new MethodInvoker(delegate
                 {
                     add(s);
@@ -227,7 +216,7 @@ namespace ZMITAD_WinForms
             // to sie juz wykona w watku gui
             if(ilosciSlow.Count == 0)
             {
-                ileZnakowMin = ileZnakowMax = s.text.Length;
+                ileZnakowMin = ileZnakowMax = s.text.Length; // do histogramu
             }
             else
             {
@@ -236,8 +225,8 @@ namespace ZMITAD_WinForms
                 if (ileZnakowMin > s.text.Length)
                     ileZnakowMin = s.text.Length;
             }
+
             sumaDlugosciStatusow += s.text.Length;
-            int ileSlow = policzSlowa(s.text);
             sumaIlosciSlow += ileSlow;
             ilosciSlow.Add(ileSlow);
             ilosciZnakow.Add(s.text.Length);
@@ -245,38 +234,23 @@ namespace ZMITAD_WinForms
             teraz = teraz - start;
             czasyNadejscia.Add(teraz);
             odswiezWykres();
-            int sekunda = (int)((double)teraz / 1000.0);
             tresciStatusow.Add(s.text);
-            textBox1.Text += "[sekunda "+sekunda+"]: "+ "Tresc statusu " + s.text + Environment.NewLine;
-            //double minuta = ((double)teraz / getCzasPrzedzialu());
-            //int imin = (int)minuta;
-            //if(popMin == -1)
-            //{
-            //    //test
-            //    popMin = imin;
-            //    ilosc++;
-            //}
-            //else
-            //{
-            //    if(popMin != imin)
-            //    {
-            //        chart1.Series[0].Points.AddXY(popMin, ilosc);
-            //        popMin = imin;
-            //        ilosc = 0;
-            //    }
-            //    else
-            //    {
+                
+            if (!checkBox1.Checked)
+            {
+                textBox1.AppendText("[Czas nadejścia (sekunda) " + sekunda + "]: " + "Treść statusu " + s.text + Environment.NewLine);
+                textBox1.ScrollBars = ScrollBars.Vertical;
+            }
 
-            //    }
-            //    ilosc++;
-            //}
-            label3.Text = "Przeanalizowano " + czasyNadejscia.Count + " statusow"
+            
+ 
+            label3.Text = "Przeanalizowano " + czasyNadejscia.Count + " statusów"
                 +
-                ". Program dziala " + getCzasDzialaniaStr()
+                ". Program działa " + getCzasDzialaniaStr()
                 +
-                " Sr. dl. statusu " + ((int)getSredniaDlStatusu()).ToString()
+                ". Średnia długość statusu " + ((int)getSredniaDlStatusu()).ToString()
                 +
-                " Sr. ilosc slow statusu " + ((int)getSredniaIloscSlowStatusu()).ToString();
+                ". Średnia ilość słów statusu " + ((int)getSredniaIloscSlowStatusu()).ToString();
 
                 
         }
@@ -287,10 +261,9 @@ namespace ZMITAD_WinForms
         }
         private int policzSlowa(String text)
         {
-            // Usuwam wszystkie znaki niealfanumeryczne
+            // Usuwamy wszystkie znaki niealfanumeryczne
             Regex rgx = new Regex("[^a-zA-Z0-9 -]");
             String t2 = rgx.Replace(text, "");
-            // mozna by ulepszyc
             string [] slowa = t2.Split(' ');
             foreach(string s in slowa)
             {
@@ -318,69 +291,21 @@ namespace ZMITAD_WinForms
         {
             return ilosciSlow.Count;
         }
-        private void testNormalnosci(List<float> Dane)
-        {
-            // http://stats.stackexchange.com/questions/97796/appropriate-test-for-detecting-a-signal-in-normally-distributed-noise
-   
-            float[] sortedYs;
-            sortedYs = Dane.OrderBy(a => a).ToArray<float>();
-            float[] cdf = new float[sortedYs.Length];
-
-            MathNet.Numerics.Distributions.Laplace ld = new MathNet.Numerics.Distributions.Laplace();
-            for (int i = 0; i < sortedYs.Length; i++)
-            {
-                cdf[i] = (float)ld.CumulativeDistribution(sortedYs[i]);
-            }
-
-            float AD = 0;
-            for (int i = 0; i < cdf.Length; i++)
-            {
-                AD -= (float)((2 * (i + 1) - 1) * (Math.Log(cdf[i]) + Math.Log(1 - cdf[cdf.Length - 1 - i])));
-            }
-            AD /= cdf.Length;
-            AD -= cdf.Length;
-            AD *= (float)(1 + (0.75 + 2.25 / cdf.Length) / cdf.Length);
-        }
-        private void test2()
-        {
-         //   TTestResult result = chart1.DataManipulator.Statistics.TTestUnequalVariances(0.2, 0.05, "Series1", "Series2");
-       //     chart1.DataManipulator.Statistics.NormalDistribution
-        }
-        public static void swtest(double [] w)
+       
+        public static void swtest(double [] w) //test Shapiro-Wilka (test normalności)
         {
             if(w.Length < 4)
             {
-                MessageBox.Show("SWTest wymaga przynajmniej 4 probek");
+                MessageBox.Show("SWTest wymaga przynajmniej 4 próbek");
                 return;
             }
             Accord.Statistics.Testing.ShapiroWilkTest t = new Accord.Statistics.Testing.ShapiroWilkTest(w);
-            MessageBox.Show("Shapiro Wilk, wynik " + t.Significant + " p value " + t.PValue);
+            if(t.Significant == true)
+            MessageBox.Show("Test Shapiro Wilk, wynik NEGATYWNY (dane nie pochodzą z rozkładu normalnego), wartość 'p' = " + t.PValue+" < 0,05");
+            else if(t.Significant == false)
+            MessageBox.Show("Test Shapiro Wilk, wynik POZYTYWNY (dane pochodzą z rozkładu normalnego), wartość 'p' = " + t.PValue+ " > 0,05");
         }
-        static public void ttest(Vector series)
-        {
-            // Create an instance of normal distribution.
-          ///  Normal distr = new Normal(3, 1);
-
-            // Generate random sample from normal distribution.
-          //  Vector series = distr.Sample(100);
-
-            // Create an instance of TTest.
-            TTest test = new TTest(0.05, Tail.Both);
-            test.Update(series, 0);
-
-            string s = ("Test Result:");
-            s += Environment.NewLine;
-            // Test decision
-            s += ("  The null hypothesis failed to be rejected:" + test.Decision);
-            s += Environment.NewLine;
-            // The statistic of TTest test.
-            s += ("  Statistics = {0:0.000}" + test.Statistics);
-            s += Environment.NewLine;
-            // The p-value of the test statistic.
-            s += ("  P-Value = {0:0.000}" + test.PValue);
-
-            MessageBox.Show(s);
-        }
+        
         private void start_thread()
         {
             textBox2.Enabled = false;
@@ -394,12 +319,9 @@ namespace ZMITAD_WinForms
 
             comboBox1.Items.Add("Co 1 sekunda");
             comboBox1.Items.Add("Co 30 sekund");
-            comboBox1.Items.Add("Co minuta");
+            comboBox1.Items.Add("Co 1 minuta");
             comboBox1.Items.Add("Co 5 minut");
             comboBox1.SelectedIndex = 0;
-
-            /// odkomentowac by samo zaczelo od razu szukac
-        //    start_thread();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -429,6 +351,16 @@ namespace ZMITAD_WinForms
         private void button3_Click(object sender, EventArgs e)
         {
             start_thread();
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
